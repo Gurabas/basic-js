@@ -11,16 +11,25 @@ const { NotImplementedError } = require('../extensions/index.js');
  * getSeason(new Date(2020, 02, 31)) => 'spring'
  * 
  */
-let seasons = ['winter', 'spring', 'summer', 'autumn'];
+let seasons = ['winter', 'spring', 'summer', 'autumn', 'winter'];
 
 function getSeason(date) {
   if (!date) {
     return 'Unable to determine the time of year!';
   }
+
   if (!Date.parse(date)) {
-    throw new Error('Invalid date!')
+    throw new Error('Invalid date!');
   }
-  let month = date.getMonth();
+
+  try {
+    date.getUTCSeconds()
+  } catch {
+    throw new Error ('Invalid date!')
+  };
+
+  let month = date.getUTCMonth();
+
   return seasons[parseInt((month + 1) / 3)];
   }
 
